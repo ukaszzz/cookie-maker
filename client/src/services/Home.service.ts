@@ -4,10 +4,18 @@ import config from '../../config/config';
 const requestBase = config.request_base;
 
 class HomeService {
-    static async getHomeData (): Promise<{ saved: {} }> {
+    static async getHomeData (): Promise<{ addons: [], base: [] }> {
         try {
             const res = await axios.get(requestBase);
-            console.log(res);
+            return res.data;
+        } catch (err) {
+            throw(err);
+        }
+    }
+
+    static async getAvailable (): Promise<{ addons: [], base: [] }> {
+        try {
+            const res = await axios.get(`${requestBase}/available`);
             return res.data;
         } catch (err) {
             throw(err);

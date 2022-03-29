@@ -1,12 +1,18 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png"/>
-  <HomeView/>
+  <el-container>
+    <el-header>
+    </el-header>
+    <el-main>
+      <HomeView/>
+      <NewCookie/>
+    </el-main>
+  </el-container>
 </template>
 
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+import { Delete, Edit, Search, Share, Upload } from '@element-plus/icons-vue';
 import HomeView from './components/HomeView.vue';
+import NewCookie from './components/NewCookie.vue';
 </script>
 
 
