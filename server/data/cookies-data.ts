@@ -1,18 +1,15 @@
 export const COOKIE_BASES = {
-    jasne: 5,
-    ciemne: 5
+    empty_light: 5,
+    empty_dark: 5
 };
 
 export const COOKIE_ADDONS = {
-    czekolada: 5,
-    posypka: 3,
-    miód: 6,
-    żurawina: 4,
-    kokos: 10
+    chocolate: 5,
+    sprinkles: 3,
+    honey: 6,
+    cranberries: 4,
+    coconut: 10
 };
 
-export const CHOOSEN = {
-    czekolada: 5,
-    posypka: 3,
-    ciemne: 5
-};
+export const CHOOSEN_ADDONS = ['chocolate', 'sprinkles'];
+export const CHOOSEN_BASE = ['empty_dark'];
