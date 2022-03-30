@@ -1,7 +1,5 @@
 <template>
   <el-container>
-    <el-header>
-    </el-header>
     <el-main>
       <HomeView/>
       <NewCookie/>

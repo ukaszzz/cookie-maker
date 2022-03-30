@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { computed, onBeforeMount, ref } from 'vue';
-import HomeService from '../services/Home.service';
+import CookieService from '../services/Cookie.service';
 
 export default {
   name: 'HomeView',
@@ -25,7 +25,7 @@ export default {
       return background.toString() + `, url(./assets/images/${sevedBase.value}.png)`;
     });
     onBeforeMount(async () => {
-      const response = await HomeService.getHomeData();
+      const response = await CookieService.getHomeData();
       sevedBase.value = response.base;
       sevedAddons.value = response.addons;
     });

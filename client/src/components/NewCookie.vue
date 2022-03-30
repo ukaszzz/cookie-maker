@@ -1,16 +1,17 @@
 <template>
-  <p>Choosen addons:</p>
+  <el-button @click="updateCookie" type="primary" style="margin: 40px">Change Cookie</el-button>
+  <p>Choose addons:</p>
   <el-row justify="center">
     <el-space wrap :size="20">
-      <el-card v-for="(price, addon, i) in sevedAddons" :key="i" class="box-card" style="width: 200px">
+      <el-card v-for="({id, name, price}) in AvailableAddons" :key="id" class="box-card" style="width: 200px">
         <div>
           <el-checkbox-group v-model="chosenAddons">
-            <el-checkbox :label="addon" size="large">
+            <el-checkbox :label="name" :id="id.toString()" size="large">
             </el-checkbox>
           </el-checkbox-group>
         </div>
         <div>
-          <img class="image" :src="`./assets/images/${addon}.png`">
+          <img class="image" :src="`./assets/images/${name}.png`">
         </div>
         <div>
           <el-space wrap :size="20" justify="center">
@@ -20,57 +21,63 @@
       </el-card>
     </el-space>
   </el-row>
-  <p>Choosen base:</p>
+  <p>Choose base:</p>
   <el-row justify="center">
     <el-card class="box-card" style="width: 70%">
       <el-space wrap :size="20">
-        <div v-for="(price, baseName, i) in sevedBase" :key="i" class="box-card"
+        <div v-for="({id, name, price}) in AvailableBases" :key="id" class="box-card"
              style="width: 200px">
-          <img class="image" :src="`./assets/images/${baseName}.png`" :alt="baseName">
+          <img class="image" :src="`./assets/images/${name}.png`" :alt="name">
           <p>Price: {{ price }} $</p>
-          <el-radio v-model="chosenBase" :label="baseName" size="large" border>{{
-              baseName
+          <el-radio v-model="chosenBase" :label="name" size="large" border>{{
+              name
             }}
           </el-radio>
         </div>
       </el-space>
     </el-card>
   </el-row>
-  <button @click="update"> check</button>
 </template>
 
 
 <script lang="ts">
 import * as Index from '@element-plus/icons-vue';
 
-import HomeService from '../services/Home.service.js';
+import CookieService from '../services/Cookie.service';
 import { onBeforeMount, onUpdated, ref } from 'vue';
+import { useCookieStore } from '../store/useCookie';
 
 export default {
   name: 'HomeView',
 
   setup () {
-    const sevedBase = ref([]);
-    const sevedAddons = ref(['honey']);
+    const AvailableBases = ref([]);
+    const AvailableAddons = ref([]);
     const chosenAddons = ref([]);
     const chosenBase = ref('');
+    const store = useCookieStore();
+
     onBeforeMount(async () => {
-      const response = await HomeService.getAvailable();
-      sevedBase.value = response.base;
-      sevedAddons.value = response.addons;
+      const response = await CookieService.getAvailable();
+      AvailableBases.value = response.bases;
+      AvailableAddons.value = response.addons;
     });
 
-    function update () {
-      console.log(chosenAddons.value[0]);
-      console.log(chosenBase.value);
-    };
+    async function updateCookie () {
+      const cookie = {
+        addons: chosenAddons.value,
+        base: chosenBase.value
+      };
+      // const response = await CookieService.saveCookie(cookie);
+      console.log(cookie);
+    }
 
     return {
-      sevedBase,
-      sevedAddons,
+      AvailableBases,
+      AvailableAddons,
       chosenAddons,
       chosenBase,
-      update
+      updateCookie
     };
   }
 };
