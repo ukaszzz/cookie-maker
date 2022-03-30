@@ -21,7 +21,6 @@ export async function getAvailableAddons (req: Request, res: Response) {
 }
 
 export async function saveCookie (req: Request, res: Response) {
-    console.log(req.body.params);
     await CookieRecord.updateCookie(req.body.params);
     res
         .status(200)

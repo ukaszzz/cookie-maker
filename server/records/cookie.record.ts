@@ -7,17 +7,22 @@ type BaseName = [{ baseName: String }[], FieldPacket[]]
 
 export class CookieRecord {
     static async updateCookie (cookie: Cookie) {
-        console.log(cookie.base);
+        if (cookie.base) {
+            await pool.execute(`UPDATE cookie SET base = :base WHERE id = 1`, {
+                base: cookie.base,
+                id: 1
+            });
+        }
 
-        await pool.execute(`UPDATE cookie SET base = :base WHERE id = 1`, {
-            base: cookie.base,
-            id: 1
-        });
-        for (const addon of cookie.addons) {
-            // await pool.execute(`INSERT INTO cookie_addons VALUES`, {
-            //     base: addon,
-            //     id: 1
-            // });
+        if (cookie.addons) {
+            await pool.execute(`DELETE FROM cookie_addons`);
+            for (const addon of cookie.addons) {
+                console.log(addon);
+                await pool.execute(`INSERT INTO cookie_addons VALUES(:id, :base)`, {
+                    id: 1,
+                    base: addon
+                });
+            }
         }
     }
 
