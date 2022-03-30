@@ -1,9 +1,10 @@
 import axios from 'axios';
 import config from '../../config/config';
+import { Cookie } from '../model/cookie';
 
 const requestBase = config.request_base;
 
-class HomeService {
+class CookieService {
     static async getHomeData (): Promise<{ addons: [], base: [] }> {
         try {
             const res = await axios.get(requestBase);
@@ -21,6 +22,17 @@ class HomeService {
             throw(err);
         }
     }
+
+    static async saveCookie (cookie: Cookie) {
+        try {
+            const res = await axios.post(`${requestBase}/saveCookie`, {
+                params: cookie
+            });
+            return res;
+        } catch (err) {
+            throw(err);
+        }
+    }
 }
 
-export default HomeService;
+export default CookieService;
