@@ -7,15 +7,5 @@ export const useCookieStore = defineStore('cookie', {
         priceAddons: 0,
         base: '',
         cookiePrice: 0
-    }),
-    getters: {
-        getCookiePrice: (state) => {
-            state.cookiePrice = 100;
-        }
-    },
-    actions: {
-        async getSaved () {
-        }
-
-    }
+    })
 });
