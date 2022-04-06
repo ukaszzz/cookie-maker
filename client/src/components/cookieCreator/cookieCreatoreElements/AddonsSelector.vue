@@ -24,8 +24,7 @@
 
 
 <script lang="ts">
-
-import { onBeforeMount, onUpdated, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useCookieStore } from '../../../store/useCookie';
 
 export default {
@@ -33,14 +32,14 @@ export default {
   props: {
     addons: Array
   },
-  setup: function () {
+  setup (props) {
     const chosenAddons = ref([]);
     const store = useCookieStore();
     watch(chosenAddons, () => {
       store.$patch((state) => {
         state.addons = chosenAddons.value;
-        state.priceAddons = chosenAddons.value.reduce(function (a, b) {
-          return a + b;
+        state.priceAddons = chosenAddons.value.reduce(function (prev, curr) {
+          return prev + props.addons[curr - 1].price;
         }, 0);
       });
     });
@@ -50,7 +49,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 a {

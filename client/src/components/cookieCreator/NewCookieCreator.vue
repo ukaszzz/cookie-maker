@@ -7,14 +7,13 @@
   <BaseSelector :bases="availableBases"/>
 </template>
 
-
 <script lang="ts">
 import AddonsSelector from './cookieCreatoreElements/AddonsSelector.vue';
 import BaseSelector from './cookieCreatoreElements/BaseSelector.vue';
 
 import { ElNotification } from 'element-plus';
 import CookieService from '../../services/Cookie.service';
-import { onBeforeMount, onUpdated, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useCookieStore } from '../../store/useCookie';
 
 export default {
@@ -23,11 +22,12 @@ export default {
     AddonsSelector,
     BaseSelector
   },
-  setup: function () {
+  setup () {
     const availableBases = ref([]);
     const availableAddons = ref([]);
     const chosenAddons = ref([]);
     const chosenBase = ref('');
+    const cookiePrice = ref();
     const store = useCookieStore();
 
     onBeforeMount(async () => {
@@ -39,6 +39,7 @@ export default {
     store.$subscribe((mutation, state) => {
       chosenAddons.value = state.addons;
       chosenBase.value = state.base;
+      cookiePrice.value = state.priceBase + state.priceAddons;
     });
 
     async function updateCookie () {
@@ -63,18 +64,17 @@ export default {
       const cookie = {
         addons: chosenAddons.value,
         base: chosenBase.value,
-        price: 1
+        price: cookiePrice.value
       };
 
       const response = await CookieService.saveCookie(cookie);
-      console.log(response);
       if (response.status === 200) {
         ElNotification({
           title: 'Success',
           message: 'Cookie Made!',
           type: 'success'
         });
-
+        store.reloadData = true;
       }
     }
 

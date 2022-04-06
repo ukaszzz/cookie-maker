@@ -5,7 +5,7 @@ import { Cookie } from '../model/Cookie';
 const requestBase = config.request_base;
 
 class CookieService {
-    static async getHomeData (): Promise<{ addons: [], base: '', price: Number }> {
+    static async getHomeData (): Promise<Cookie> {
         try {
             const res = await axios.get(requestBase);
             return res.data;

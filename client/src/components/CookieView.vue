@@ -1,6 +1,4 @@
 <template>
-  price: {{ CookiePrice }}
-  <p>Cookie</p>
   <el-row justify="center">
     <el-space wrap :size="20">
       <el-card v-if="!isCookieSaved" class="cookie-box">
@@ -11,6 +9,12 @@
                class="cookie-box">
       </el-card>
     </el-space>
+  </el-row>
+  <el-row justify="center" v-if="isCookieSaved">
+    <p>Saved cookie price: {{ CookiePrice }} $</p>
+  </el-row>
+  <el-row justify="center">
+    <p>Current cookie Price: {{ store.priceAddons + store.priceBase }} $</p>
   </el-row>
 </template>
 
@@ -23,8 +27,8 @@ export default {
   name: 'CookieView',
 
   setup () {
-    const savedBase = ref('');
-    const savedAddons = ref([]);
+    const savedBase = ref();
+    const savedAddons = ref();
     const isCookieSaved = ref(false);
     const CookiePrice = ref();
     const cookieBackground = computed(() => {
@@ -36,10 +40,6 @@ export default {
       await loadData();
     });
 
-    store.$subscribe(async () => {
-      await loadData();
-    });
-
     async function loadData () {
       const response = await CookieService.getHomeData();
       savedBase.value = response.base;
@@ -47,6 +47,13 @@ export default {
       CookiePrice.value = response.price;
       isCookieSaved.value = response.addons.length > 0;
     }
+
+    store.$subscribe((mutation, state) => {
+      if (state.reloadData) {
+        loadData();
+        state.reloadData = false;
+      }
+    });
 
     return {
       cookieBackground,

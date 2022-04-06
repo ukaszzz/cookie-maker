@@ -8,7 +8,6 @@ type CookiePrice = [{ price: Number }[], FieldPacket[]]
 
 export class CookieRecord {
     static async updateCookie (cookie: Cookie) {
-        console.log('cookie', cookie.price);
         if (cookie.base) {
             await pool.execute(`DELETE FROM cookie`);
             await pool.execute(`INSERT INTO cookie VALUES(:id, :base, :price)`, {
@@ -47,7 +46,7 @@ export class CookieRecord {
         return {
             addons: addons.map(addon => addon.addonName),
             base: base.map(base => base.baseName)[0],
-            price: price[0].price
+            price: price.map(price => price.price)[0]
         };
     }
 }
