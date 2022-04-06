@@ -3,5 +3,6 @@ import { Base } from './Base';
 
 export interface Cookie {
     addons: Addon[],
-    base: Base
+    base: Base,
+    price: Number
 }

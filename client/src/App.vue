@@ -1,18 +1,16 @@
 <template>
   <el-container>
     <el-main>
-      <HomeView/>
-      <NewCookie/>
+      <CookieView/>
+      <NewCookieCreator/>
     </el-main>
   </el-container>
 </template>
 
 <script setup lang="ts">
-import { Delete, Edit, Search, Share, Upload } from '@element-plus/icons-vue';
-import HomeView from './components/HomeView.vue';
-import NewCookie from './components/NewCookie.vue';
+import CookieView from './components/CookieView.vue';
+import NewCookieCreator from './components/cookieCreator/NewCookieCreator.vue';
 </script>
-
 
 <style>
 

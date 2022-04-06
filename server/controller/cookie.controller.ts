@@ -5,7 +5,8 @@ export async function getHomeData (req: Request, res: Response) {
     const cookie = await CookieRecord.getSavedCookie();
     const response = {
         addons: cookie.addons,
-        base: cookie.base
+        base: cookie.base,
+        price: cookie.price
     };
     res.send(response);
 }

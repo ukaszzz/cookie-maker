@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia';
-import CookieService from '../services/Cookie.service';
 
 export const useCookieStore = defineStore('cookie', {
     state: () => ({
         addons: [],
+        priceBase: 0,
+        priceAddons: 0,
         base: '',
         cookiePrice: 0
     }),

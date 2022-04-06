@@ -1,4 +1,5 @@
 export interface Cookie {
     addons: String[],
-    base: String
+    base: String,
+    price: Number
 }
