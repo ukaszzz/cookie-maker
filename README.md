@@ -1,6 +1,13 @@
 # Cookie factory
 
-Simple app, which allow you to create favourite cookie. You can choose one base and from 1 to 5 addons.
+Create your favourite cookie. You can choose one base and from 1 to 5 addons.
+
+To do:
+
+- removing the cookie,
+- save a few cookies,
+- review of saved cookies,
+- edition of the selected cookie
 
 ## Technologies and utils:
 
